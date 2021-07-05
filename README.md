@@ -1,0 +1,1 @@
+# Analyatical-Calculations-of-gear

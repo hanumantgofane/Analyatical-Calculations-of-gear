@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Power calculation of spur gear</title>
+
+	<style type="text/css">
+
+
+		h1 {
+			border-bottom: 8px solid #c519bc;
+			/* As I've said, adding this allowed me to do so, but the result was far from ideal! */
+		}
+
+		h2{
+
+			position: absolute;
+			left: 1000px;
+			top: 50px;
+			color: #e4725b;
+		}
+
+		
+		body{
+
+			
+			margin-top: 10px;
+			margin-left:40px; 
+			background-color:#5be4ce;
+
+		}
+
+		.Span{
+			font-size: 20px; font-weight: bold;
+			color-profile: 
+
+		}
+
+		.Span_2{
+			font-size: 20px; font-weight: bold;
+			
+		}
+		
+		.input_style{
+
+			font-size: 20px; border-radius: 10px; background-color: ; text-align: center ;
+		}
+
+		.btn_s{
+			position: absolute;left: 490px;top: 120px;
+			font-size: 20px; border-radius: 20px; text-align: center;
+			border: 2px solid black;
+			background-color:#2db13a;
+			padding: 10px 20px;
+			cursor: pointer;
+			border-color: #4CAF50;
+
+
+
+		}
+		.btn_sb{
+			position: absolute;left: 500px;top: 190px;
+			font-size: 20px; border-radius: 20px; text-align: center;
+			border: 2px solid black;
+			background-color:#2db13a;
+			padding: 10px 20px;
+			cursor: pointer;
+			border-color: #4CAF50;
+
+		}
+		.btn_sw{
+			position: absolute;left: 500px;top: 260px;
+			font-size: 20px; border-radius: 20px; text-align: center;
+			border: 2px solid black;
+			background-color:#2db13a;
+			padding: 10px 20px;
+			cursor: pointer;
+			border-color: #4CAF50;
+
+		}
+		.btn_torque{
+			position: absolute;left: 470px;top: 330px;
+			font-size: 20px; border-radius: 20px; text-align: center;
+			border: 2px solid black;
+			background-color:#2db13a;
+			padding: 10px 20px;
+			cursor: pointer;
+			border-color: #4CAF50;
+		}
+		.btn_Peff{
+			position: absolute;left: 490px;top: 400px;
+			font-size: 20px; border-radius: 20px; text-align: center;
+			border: 2px solid black;
+			background-color:#2db13a;
+			padding: 10px 20px;
+			cursor: pointer;
+			border-color: #4CAF50;;
+		}
+		.btn_P{
+			position: absolute;left: 480px;top: 470px;
+			font-size: 20px; border-radius: 20px; text-align: center;
+			border: 2px solid black;
+			background-color:#2db13a;
+			padding: 10px 20px;
+			cursor: pointer;
+			border-color: #4CAF50;
+
+		</style>
+
+
+		<script type="text/javascript">
+
+
+			function stress() {
+				var Sut=document.getElementById('Sut');
+				var stress;
+
+				stress=Number(Sut.value)/3;
+				document.getElementById('stress').value=stress;
+}
+
+				function beam_strength(which_button) {
+				// body...
+
+
+				var Sut=document.getElementById('Sut');
+				var Zp=document.getElementById('Zp');
+				var Zg=document.getElementById('Zg');
+				var dp=document.getElementById('dp');
+				var dg=document.getElementById('dg');
+				var np=document.getElementById('np');
+				var ng=document.getElementById('ng');
+				var m=document.getElementById('m');
+				var Fs=document.getElementById('Fs');
+				var b=document.getElementById('b');
+				var Cs=document.getElementById('Cs');
+				var Cv=document.getElementById('Cv');
+				var BHN=document.getElementById('BHN');
+				var Y=document.getElementById('Y');
+				var Sb;var Q;
+				var k; var Sw;
+				var Mt;
+				var Torque;
+				var stress;
+				var Peff;
+				var Pt;
+
+
+				Q=(2*Number(Zg.value))/(Number(Zg.value)+Number(Zp.value));
+				k=Number(BHN.value)/100;
+				k=0.16*k*k;
+				Sw=Number(b.value)*Number(Q)*Number(Zp.value)*Number(m.value)*Number(k);
+
+				stress=Number(Sut.value)/3;
+				Sb=Number(m.value)*Number(b.value)*Number(stress)*Number(Y.value);
+
+				if (Sb<Sw) {
+					Peff=Number(Sb)/Number(Fs.value);
+					Pt=(Number(Peff)*Number(Cv.value))/Number(Cs.value);
+				}
+
+				else if (Sw==0) {
+
+					Peff=Number(Sb)/Number(Fs.value);
+					Pt=(Number(Peff)*Number(Cv.value))/Number(Cs.value);
+				}
+
+				else{
+
+					Peff=Number(Sw)/Number(Fs.value);
+					Pt=(Number(Peff)*Number(Cv.value))/Number(Cs.value);
+				}
+
+				Torque=(Number(Pt)*Number(m.value)*Number(Zp.value))/2;
+
+				var P=(((2*22)/7)*Number(np.value)*Number(Torque))/(60*Math.pow(10,6));
+
+
+				switch(which_button){
+					case 'Stress':
+					document.getElementById('Stress').value=Sb;
+					break;
+
+					case 'Torque':
+					document.getElementById('Torque').value=Torque; 
+					break;
+
+					case 'Sb':
+					document.getElementById('Sb').value=Sb;
+					break;	
+
+					case 'Sw':
+					document.getElementById('Sw').value=Sw;
+					break;	
+
+					case 'Peff':
+					document.getElementById('Peff').value=Peff;
+					break;
+
+					case 'P':
+
+					document.getElementById('Power').value=P;
+
+					default : 
+
+				}
+
+
+			}		
+
+		</script>
+
+	</head>
+	<body>
+		<div class="title">
+			<h1 style="text-align: center;">Calculation Power of Spur Gear</h1>
+		</div class="input_1">
+
+		<div class="made_title">
+			<h2>Made by__Gofane Hanumant</h2>
+
+</div>
+	<span class="Span">Sut:</span><input class="input_style"id="Sut" type="text" placeholder="ultimate tensile strenth"><br><br>
+	<span class="Span">Zp:</span><input class="input_style" id="Zp" type="text" placeholder="No.of teeth on pinion"><br><br>
+	<span class="Span">Zg:</span><input class="input_style" id="Zg" type="text" placeholder="No.of teeth on gear"><br><br>
+	<span class="Span">dp:</span><input class="input_style" id="dp" type="text" placeholder="Diametre of pinion"><br><br>
+	<span class="Span">dg:</span><input class="input_style" id="dg" type="text" placeholder="Diametre of gear"><br><br>
+	<span class="Span">np:</span><input class="input_style" id="np" type="text" placeholder="Speed of pinion"><br><br>
+	<span class="Span">ng:</span><input class="input_style" id="ng" type="text" placeholder="Speed of gear"><br><br>
+	<span class="Span">Fs:</span><input class="input_style" id="Fs" type="text" placeholder="Factor of safety"><br><br>
+	<span class="Span" >m:</span><input class="input_style" id="m" type="text" placeholder="Module in mm"><br><br>
+	<span class="Span"style="margin-left:-25px;">BHN:</span><input class="input_style" id="BHN" type="text" placeholder="Stress Factor"><br><br>
+	<span class="Span">b:</span><input class="input_style" id="b" type="text" placeholder="Face Width"><br><br>
+	<span class="Span">Cs:</span><input class="input_style" id="Cs" type="text" placeholder="Surface Factor"><br><br>
+	<span class="Span">Cv:</span><input class="input_style" id="Cv" type="text" placeholder="Velocity Factor"><br><br>
+	<span class="Span">Y:</span><input class="input_style" id="Y" type="text" placeholder="Lewis form Factor"><br><br>
+
+	<span style="position: absolute;left: 600px;top: 130px;" class="Span_2">B.Stress:</span>
+	<input style="position: absolute;left: 680px;top: 130px;" class="input_style" id="stress" type="text" placeholder="stress">
+	<span style="position: absolute;left: 930px;top: 135px;" class="Span">N/mm2</span>
+	<span style="position: absolute;left: 640px;top: 200px;" class="Span_2">Sb:</span>
+	<input style="position: absolute;left: 680px;top: 200px;" class="input_style" id="Sb" type="text" placeholder="Beam strength">
+	<span style="position: absolute;left: 930px;top: 205px;" class="Span">N</span>
+	<span style="position: absolute;left: 640px;top: 270px;" class="Span_2">Sw:</span>
+	<span style="position: absolute;left: 930px;top: 275px;" class="Span">N</span>
+	<input style="position: absolute;left: 680px;top: 270px;"class="input_style" id="Sw" type="text" placeholder="Wear strength">
+	<span style="position: absolute;left: 640px;top: 340px;" class="Span_2">Mt:</span>
+	<span style="position: absolute;left: 930px;top: 345px;" class="Span">N.mm</span>
+	<input style="position: absolute;left: 680px;top: 340px;" class="input_style" id="Torque" placeholder="Torque">
+	<span  style="position: absolute;left: 630px;top: 410px;"class="Span_2">Peff:</span>
+	<span style="position: absolute;left: 930px;top: 415px;" class="Span">N</span>
+	<input style="position: absolute;left: 680px;top: 410px;"class="input_style" id="Peff" type="text" placeholder="Peff">
+	<span style="position: absolute;left: 600px;top: 480px;" class="Span_2">Power:</span>
+	<span style="position: absolute;left: 930px;top: 485px;" class="Span">Kw</span>
+	<input style="position: absolute;left: 680px;top: 480px;"class="input_style" id="Power" type="text" placeholder="Power">
+
+	<div class="result">
+	<button class="btn_s" id="stress" onclick="stress()">stress</button>
+	<button class="btn_sb" id="Sb" onclick="beam_strength('Sb')">Sb</button>
+	<button class="btn_sw" id="Sw" onclick="beam_strength('Sw')">Sw</button>
+	<button class="btn_torque" id="Torque" onclick="beam_strength('Torque')">Mt_Torque</button>
+	<button class="btn_Peff" id="Peff" onclick="beam_strength('Peff')">Peff</button>
+	<button class="btn_P" id="P" onclick="beam_strength('P')">Power</button>
+</div>
+
+
+
+		</body>
+		</html>
